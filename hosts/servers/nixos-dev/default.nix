@@ -5,6 +5,8 @@
       ./hardware-configuration.nix
     ];
 
+  role = "server";
+
   networking = {
     hostName = "nixos-dev";
     interfaces = {

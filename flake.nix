@@ -11,13 +11,10 @@
 outputs = { self, nixpkgs, home-manager, sops-nix, ... }@inputs:
     let
       system = "x86_64-linux";
-      userNames = builtins.filter (name:
-      (builtins.readDir ./users)."${name}" == "directory" ) (builtins.attrNames (builtins.readDir ./users));
+      users = builtins.filter (name:
+      (builtins.readDir ./modules/home-manager/users).${name} == "directory"
+      ) (builtins.attrNames (builtins.readDir ./modules/home-manager/users));
       hostnames = builtins.attrNames (builtins.readDir ./hosts);
-      users = builtins.listToAttrs (map (name: {
-        name = name;
-        value = import (./modules/home-manager/users/${name}/home.nix);
-        }) userNames);
     in 
     {
       nixosConfigurations = nixpkgs.lib.genAttrs hostnames (hostname:
@@ -32,8 +29,10 @@ outputs = { self, nixpkgs, home-manager, sops-nix, ... }@inputs:
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit users; };
-              home-manager.users = nixpkgs.lib.mapAttrs (_: import) users;
+              home-manager.users = builtins.listToAttrs (map (name: {
+                name = name;
+                value = import ./modules/home-manager/users/${name}/home.nix;
+                }) users);
             }
           ];
         }
