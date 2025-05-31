@@ -7,7 +7,7 @@ in
   home-manager.users.aria = { pkgs, ... }: {
     home.packages = [ pkgs.atool ];
     programs.bash.enable = true;
-    home.shellAliases = {
+    programs.bash.shellAliases = {
       g = "git";
     };
   
