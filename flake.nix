@@ -18,23 +18,36 @@ outputs = { self, nixpkgs, home-manager, sops-nix, ... }@inputs:
     in 
     {
       nixosConfigurations = nixpkgs.lib.genAttrs hostnames (hostname:
+        let
+          hostModule = import ./hosts/${hostname};
+          roleModule = { config, ... }: { _module.args.role = config.role or null; };
+          baseModules = [
+            hostModule
+            roleModule
+            ./modules/nixos/base.nix
+            ./modules/nixos/role.nix
+            sops-nix.nixosModules.sops
+          ];
+        in
         nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit users; };
-          modules = [
-            (import (./hosts + "/${hostname}"))
-            ./modules/nixos/base.nix
-            sops-nix.nixosModules.sops
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users = builtins.listToAttrs (map (name: {
+          specialArgs = {
+            inherit users;
+          };
+          modules = baseModules ++ (
+            if (hostModule { config = {}; }).role == "desktop" then [
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.extraSpecialArgs = { inherit users; };
+                home-manager.users = builtins.listToAttrs (map (name: {
                 name = name;
                 value = import ./modules/home-manager/users/${name}/home.nix;
                 }) users);
-            }
-          ];
+              }
+            ] else []
+          );
         }
       );
     };

@@ -3,7 +3,7 @@
     home.packages = [ pkgs.atool ];
     programs.bash.enable = true;
     programs.bash.shellAliases = {
-      ge = "git";
+      getty = "git";
     };
     home.file."hello.txt".text = "home-manager works!";
   

@@ -1,11 +1,11 @@
-{ lib, pkgs, ... }:
+{ config, ... }:
 
 {
   imports = [
       ./hardware-configuration.nix
     ];
 
-  role = "server";
+  role = "desktop";
 
   networking = {
     hostName = "nixos-dev";
