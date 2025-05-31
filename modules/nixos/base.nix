@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
+    imports =  [
+        ../../users/aria.nix
+    ];
     time.timeZone = "America/New_York";
     services.xserver.xkb.layout = "us";
 
