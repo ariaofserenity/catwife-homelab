@@ -7,23 +7,25 @@
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    outputs = { nixpkgs, ... } @ inputs:
+    outputs = { nixpkgs, ... }@inputs:
     let 
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
     in
     {
         nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-            extraSpecialArgs = {inherit inputs;};
+            specialArgs = {inherit inputs;};
             modules = [
                 ./modules/nixos/base.nix
             ];
           };
-          nixos-dev = nixpkgs.lib.nixosSystem {
-            extraSpecialArgs = {inherit inputs;};
+          
+        nixosConfigurations.nixos-dev = nixpkgs.lib.nixosSystem {
+            specialArgs = {inherit inputs;};
             modules = [
+              ./modules/nixos/base.nix
               ./hosts/nixos-dev/configuration.nix  
             ];
-          }
+          };
     };
 }

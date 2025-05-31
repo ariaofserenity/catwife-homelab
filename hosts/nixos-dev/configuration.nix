@@ -1,18 +1,22 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
+  imports = [
       ./hardware-configuration.nix
     ];
 
   time.timeZone = "America/New_York";
 
   networking = {
-    interfaces.ens18 = {
-      ipv4.addresses = [{
+    hostName = "nixos-dev";
+    interfaces = {
+      ens18.ipv4.addresses = [{
         address = "192.168.2.201";
-        prefixLength = "24";
+        prefixLength = 24;
       }];
+    };
+    defaultGateway = {
+      address = "192.168.2.1";
     };
   };
 
