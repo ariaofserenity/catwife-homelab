@@ -6,14 +6,15 @@
         home-manager.url = "github:nix-community/home-manager";
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
         sops-nix.url = "github:Mic92/sops-nix";
+        nixarr.url = "github:rasmus-kirk/nixarr";
     };
 
 outputs = { self, nixpkgs, home-manager, sops-nix, ... }@inputs:
     let
       system = "x86_64-linux";
       users = builtins.filter (name:
-      (builtins.readDir ./modules/home-manager/users).${name} == "directory"
-      ) (builtins.attrNames (builtins.readDir ./modules/home-manager/users));
+      (builtins.readDir ./home-manager/users).${name} == "directory"
+      ) (builtins.attrNames (builtins.readDir ./home-manager/users));
       hostnames = builtins.attrNames (builtins.readDir ./hosts);
     in 
     {
@@ -24,8 +25,8 @@ outputs = { self, nixpkgs, home-manager, sops-nix, ... }@inputs:
           baseModules = [
             hostModule
             roleModule
-            ./modules/nixos/base.nix
-            ./modules/nixos/role.nix
+            ./nixos/base.nix
+            ./nixos/role.nix
             sops-nix.nixosModules.sops
           ];
         in
@@ -43,7 +44,7 @@ outputs = { self, nixpkgs, home-manager, sops-nix, ... }@inputs:
                 home-manager.extraSpecialArgs = { inherit users; };
                 home-manager.users = builtins.listToAttrs (map (name: {
                 name = name;
-                value = import ./modules/home-manager/users/${name}/home.nix;
+                value = import ./home-manager/users/${name}/home.nix;
                 }) users);
               }
             ] else []

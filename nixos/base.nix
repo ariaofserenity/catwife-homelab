@@ -2,7 +2,7 @@
 
 {
     imports =  [
-        ../../users/aria.nix
+        ../users/aria.nix
     ];
     time.timeZone = "America/New_York";
     services.xserver.xkb.layout = "us";
