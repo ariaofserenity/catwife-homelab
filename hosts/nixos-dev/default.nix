@@ -4,7 +4,6 @@
   imports = [
       ./hardware-configuration.nix
       ../../modules/nfs.nix
-      ../../modules/bind/bind.nix
     ];
 
   role = "desktop";
