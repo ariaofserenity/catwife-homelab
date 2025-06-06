@@ -8,7 +8,7 @@
     services.xserver.xkb.layout = "us";
 
     networking.nameservers = [
-      "192.168.2.9"
+      "192.168.2.201"
       "1.1.1.1"
     ];
     
@@ -37,6 +37,7 @@
         age
         sops
         killall
+        dig
     ];
 
     virtualisation.docker.enable = true;
