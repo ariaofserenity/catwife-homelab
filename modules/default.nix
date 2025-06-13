@@ -1,0 +1,5 @@
+{
+
+  homelab = import ./nixos;
+
+}

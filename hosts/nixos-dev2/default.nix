@@ -3,12 +3,9 @@
 {
   imports = [
       ./hardware-configuration.nix
-      ../../modules/nfs.nix
     ];
 
   role = "desktop";
-
-  nfsmounts.mountMedia = true;
 
   networking = {
     hostName = "nixos-dev2";
