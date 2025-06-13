@@ -8,7 +8,7 @@
     services.xserver.xkb.layout = "us";
 
     networking.nameservers = [
-      "192.168.2.201"
+      "192.168.2.9"
       "1.1.1.1"
     ];
     
