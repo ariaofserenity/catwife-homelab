@@ -6,13 +6,14 @@ let
 in
 {
   options.homelab.services.grocy.enable = mkEnableOption "Grocy";
-  config.services.grocy = mkIf cfg.enable {
+  config = mkIf cfg.enable {
+        services.grocy = {
         enable = true;
         hostName = "catwife.dev";
         dataDir = "/var/lib/grocy";
-        settings = {
-            currency = "CAD";
+        settings.currency = "CAD";
         };
-    };
 
+      networking.firewall.allowedTCPPorts = [ 80 443 ];
+    };
 }

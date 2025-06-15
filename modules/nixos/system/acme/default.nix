@@ -7,7 +7,7 @@ with lib;
 
   config = mkIf config.homelab.acme.enable {
     sops.secrets.cfToken = {
-      sopsFile = ../secrets/cf.env;
+      sopsFile = ../../../../secrets/cf.env;
       format = "dotenv";
     };
 
