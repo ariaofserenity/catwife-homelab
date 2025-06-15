@@ -4,9 +4,12 @@
   imports = [
       ./hardware-configuration.nix
       ./mounts.nix
+      ../../profiles/acme.nix
     ];
 
   role = "desktop";
+  
+  homelab.services.grocy.enable = false;
 
   networking = {
     hostName = "nixos-dev";

@@ -40,6 +40,8 @@
         dig
     ];
 
+    sops.age.keyFile = "/etc/age/age.key";
+
     virtualisation.docker.enable = true;
 
     services.fail2ban = {
