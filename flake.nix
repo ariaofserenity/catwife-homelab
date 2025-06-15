@@ -27,7 +27,7 @@ outputs = { self, nixpkgs, home-manager, sops-nix, ... }@inputs:
             roleModule
             ./global/global.nix
             ./global/role.nix
-            ./global/nixos
+            ./modules/nixos
             sops-nix.nixosModules.sops
           ];
         in

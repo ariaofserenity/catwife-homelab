@@ -3,10 +3,12 @@
 {
   imports = [
       ./hardware-configuration.nix
+      ../../global/acme.nix
     ];
 
   role = "desktop";
-
+  
+  homelab.acme.enable = true;
   homelab.services.grocy.enable = true;
 
   networking = {

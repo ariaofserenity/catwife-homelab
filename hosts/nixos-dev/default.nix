@@ -4,10 +4,11 @@
   imports = [
       ./hardware-configuration.nix
       ./mounts.nix
-      ../../profiles/acme.nix
     ];
 
-  role = "desktop";
+  role = "desktop"; 
+
+  homelab.acme.enable = true;
 
   networking = {
     hostName = "nixos-dev";

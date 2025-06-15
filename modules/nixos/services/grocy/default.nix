@@ -5,13 +5,10 @@ let
   cfg = config.homelab.services.grocy;
 in
 {
-  imports = [
-    ../../../global/acme.nix
-  ]
   options.homelab.services.grocy.enable = mkEnableOption "Grocy";
   config.services.grocy = mkIf cfg.enable {
         enable = true;
-        hostName = "nixos-dev";
+        hostName = "catwife.dev";
         dataDir = "/var/lib/grocy";
         settings = {
             currency = "CAD";

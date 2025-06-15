@@ -2,4 +2,5 @@ creation_rules:
   - path_regex: secrets/cf.env
     age: >-
       age1mj9cqagk6q6rx7y2wxzvdawche6unnkwemurm9ez7nlvrcc69a0syvyltt,
-      age1wn75mgz7k92jmxg9ejhelcqyahvcqh2zf9mncpz47njpu9khd3gsakyh5k
+      age1wn75mgz7k92jmxg9ejhelcqyahvcqh2zf9mncpz47njpu9khd3gsakyh5k,
+      age17j9r835afc5wpmllhfgq0lfc6wcgpez39kuk54n5xhxtkaycu54smdt2kd
