@@ -7,6 +7,8 @@
 
   role = "desktop";
 
+  homelab.services.grocy.enable = true;
+
   networking = {
     hostName = "nixos-dev2";
     interfaces = {
