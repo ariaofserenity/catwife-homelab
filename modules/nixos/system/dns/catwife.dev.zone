@@ -1,0 +1,24 @@
+$TTL 2d
+
+$ORIGIN catwife.dev.
+
+@           IN          SOA         ns.catwife.dev. ariaserenityvt@gmail.com. (
+                                                    2025062001 ; serial
+                                                    12h      ; refresh
+                                                    15       ; retry
+                                                    3w       ; expire
+                                                    2h       ; minimum TTL
+                                                    )
+
+            IN          NS          ns.catwife.dev.
+
+ns          IN          A           192.168.2.201
+
+; DNS records
+grocy.catwide.dev IN A 192.168.2.201
+nixos-dev IN A 192.168.2.201
+nixos-dev2 IN A 192.168.2.203
+
+
+
+

@@ -9,6 +9,7 @@
   role = "desktop"; 
 
   homelab.acme.enable = true;
+  homelab.dns.enable = true;
 
   networking = {
     hostName = "nixos-dev";

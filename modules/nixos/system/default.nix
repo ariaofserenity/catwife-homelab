@@ -2,5 +2,6 @@
   imports = [
     ./nfs
     ./acme
+    ./dns
   ];
 }
