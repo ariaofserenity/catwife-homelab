@@ -10,7 +10,7 @@ in
        
        system.activationScripts.bind-zones.text = ''
         mkdir -p /etc/bind/zones
-        chown named:named: /etc/bind/zones
+        chown named:named /etc/bind/zones
         '';
 
         environment.etc."bind/zones/catwife.dev.zone" = {
