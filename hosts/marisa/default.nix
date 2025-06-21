@@ -8,8 +8,9 @@
 
   role = "server"; 
 
-  #homelab.acme.enable = true;
-  #homelab.services.grocy.enable = true;
+  homelab.acme.enable = true;
+  homelab.services.grocy.enable = true;
+  homelab.services.startpage.enable = true;
 
   networking = {
     hostName = "marisa";
