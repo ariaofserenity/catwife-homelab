@@ -3,5 +3,6 @@
     ./nfs
     ./acme
     ./dns
+    ./autoupgrade
   ];
 }

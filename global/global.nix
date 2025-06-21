@@ -38,18 +38,6 @@
     dig
   ];
 
-  system.autoUpgrade = {
-    enable = true;
-    flake = inputs.self.outPath;
-    flags = [
-      "--update-input"
-      "nixpkgs"
-      "-L"
-    ];
-    dates = "02:00";
-    randomizedDelaySec = "45min";
-  };
-
   sops.age.keyFile = "/etc/age/age.key";
 
   virtualisation.docker.enable = true;
