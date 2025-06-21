@@ -7,9 +7,11 @@
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
         sops-nix.url = "github:Mic92/sops-nix";
         nixarr.url = "github:rasmus-kirk/nixarr";
+        comin.url = "github:nlewo/comin";
+        comin.inputs.nixpkgs.follows = "nixpkgs"; 
     };
 
-outputs = { self, nixpkgs, home-manager, sops-nix, ... }@inputs:
+outputs = { self, nixpkgs, home-manager, sops-nix, comin, ... }@inputs:
     let
       system = "x86_64-linux";
       users = builtins.filter (name:
@@ -22,14 +24,27 @@ outputs = { self, nixpkgs, home-manager, sops-nix, ... }@inputs:
         let
           hostModule = import ./hosts/${hostname};
           roleModule = { config, ... }: { _module.args.role = config.role or null; };
+          cominModule = {
+            services.comin = {
+              enable = true;
+              remotes = [
+                {
+                  name = "origin";
+                  url = "https://github.com/ariaofserenity/catwife-homelab.git";
+                  branches.main.name = "main";
+                }
+              ];
+            };
+          };
           baseModules = [
+            comin.nixosModules.comin
+            sops-nix.nixosModules.sops
             hostModule
             roleModule
+            cominModule
             ./global/global.nix
             ./global/role.nix
             ./modules/nixos
-           
-            sops-nix.nixosModules.sops
           ];
         in
         nixpkgs.lib.nixosSystem {
