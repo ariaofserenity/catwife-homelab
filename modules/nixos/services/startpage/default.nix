@@ -7,32 +7,29 @@ in {
   config = mkIf cfg.enable {
     services.nginx = {
       enable = true;
-      services.nginx.virtualHosts."startpage.catwife.dev" = {
+      virtualHosts."startpage.catwife.dev" = {
         root = "/var/www/startpage";
       };
     };
 
-    systemd.services.webpageUpdater = {
-      description = "Update website files from Git repo";
-
-      timerConfig = {
-        OnBootSec = "1min";
-        OnUnitActiveSec = "3min";
-      };
-      wants = [ "webpageUpdater.timer" ];
-
-      serviceConfig = {
-        Type = "oneshot";
-        WorkingDirectory = "/var/www/startpage";
-        ExecStart = ''
-          git pull origin main
-        '';
-        User = "root";
-        Group = "root";
-      };
+   systemd.services.webpageUpdater = {
+    serviceConfig = {
+      Type = "oneshot";
     };
+    script = ''
+      cd /var/www/startpage
+      git pull
+      systemctl reload nginx
+    '';
+  };
 
-    systemd.timers.webpageUpdater = { wantedBy = [ "timers.target" ]; };
+  systemd.timers.webpageUpdater = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "5min";
+      OnUnitActiveSec = "5min";
+    };
+  };
     
     system.activationScripts.cloneWebpage = {
       text = ''
