@@ -7,8 +7,8 @@
 
   role = "desktop";
   
-  homelab.acme.enable = true;
-  homelab.services.grocy.enable = true;
+  #homelab.acme.enable = true;
+  #homelab.services.grocy.enable = true;
 
   networking = {
     hostName = "nixos-dev2";
