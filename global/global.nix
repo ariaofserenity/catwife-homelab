@@ -7,10 +7,15 @@
     time.timeZone = "America/New_York";
     services.xserver.xkb.layout = "us";
 
-    networking.nameservers = [
-      "192.168.2.201"
+    networking = {
+        nameservers = [
+      "192.168.2.5"
       "1.1.1.1"
     ];
+    search = [
+        "catwife.dev"
+    ];
+    };
     
     nix.settings.experimental-features = ["nix-command" "flakes" ];
     

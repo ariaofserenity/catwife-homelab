@@ -1,37 +1,60 @@
-{ lib, config, pkgs, ...}:
+{ lib, config, pkgs, ... }:
 
 with lib;
 let
   cfg = config.homelab.dns;
+  net = builtins.fromJSON (builtins.readFile ../../../../network.json);
+  
+  mkLocalData =
+  (lib.mapAttrsToList (name: ip:
+    "\"${name} IN A ${ip}\""
+  ) net.records.A);
 in
 {
-  options.homelab.dns.enable = mkEnableOption "BIND";
+  options.homelab.dns.enable = mkEnableOption "Enable local DNS with Unbound and AdGuard";
+
   config = mkIf cfg.enable {
-       
-       system.activationScripts.bind-zones.text = ''
-        mkdir -p /etc/bind/zones
-        chown named:named /etc/bind/zones
-        '';
+    services.unbound = {
+      enable = true;
+      settings = {
+        server = {
+          interface = [ "127.0.0.1" ];
+          port = 5353;
+          access-control = "192.168.2.0/24 allow";
+          verbosity = 1;
 
-        environment.etc."bind/zones/catwife.dev.zone" = {
-            enable = true;
-            user = "named";
-            group = "named";
-            mode = "0644";
-            text = builtins.readFile ./catwife.dev.zone;
+          
+          local-zone = [ "\"${net.domain}\" static" ];
+          local-data = mkLocalData;
         };
-       
-       services.bind = {
-        enable = true;
-        zones."catwife.dev" = {
-            file = "/etc/bind/zones/catwife.dev.zone";
-            master = true;
-        };
-       };
-
-       networking.firewall = {
-            allowedTCPPorts = [ 53 ];
-            allowedUDPPorts = [ 53 ];
-       };
+      };
     };
+
+   services.blocky = {
+    enable = true;
+    settings = {
+      ports.dns = 53;
+      upstreams.groups.default = [
+        "127.0.0.1:5353"
+      ];
+      conditional = {
+        fallbackUpstream = true;
+      };
+      
+      blocking = {
+        denylists = {
+          ads = ["https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"];
+         
+        };
+
+        clientGroupsBlock = {
+          default = [ "ads" ];
+        };
+      };
+    };
+  };
+
+    networking.firewall.allowedTCPPorts = [ 53 5353 3000 ];
+    networking.firewall.allowedUDPPorts = [ 53 5353 ];
+  };
 }

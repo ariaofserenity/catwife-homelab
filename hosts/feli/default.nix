@@ -6,16 +6,16 @@
       ./mounts.nix
     ];
 
-  role = "desktop"; 
+  role = "server"; 
 
-  #homelab.acme.enable = true;
-  #homelab.dns.enable = true;
+  homelab.acme.enable = true;
+  homelab.dns.enable = true;
 
   networking = {
-    hostName = "nixos-dev";
+    hostName = "feli";
     interfaces = {
       ens18.ipv4.addresses = [{
-        address = "192.168.2.201";
+        address = "192.168.2.5";
         prefixLength = 24;
       }];
     };
@@ -24,4 +24,3 @@
     };
   };
 }
-

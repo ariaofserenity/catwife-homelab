@@ -1,0 +1,14 @@
+{
+  "domain": "catwife.dev",
+
+  "records": {
+    "A": {
+      "nixos-dev2": "192.168.2.203",
+      "nixos-dev": "192.168.2.201",
+      "grocy.catwife.dev": "192.168.2.203",
+      "proxmox01.catwife.dev": "192.168.2.13",
+      "storage01.catwife.dev": "192.168.2.14",
+      "startpage.catwife.dev": "192.168.2.202"
+    }
+  }
+}
