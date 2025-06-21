@@ -3,12 +3,11 @@
 {
   imports = [
       ./hardware-configuration.nix
-      ./mounts.nix
     ];
 
   role = "server"; 
 
-  homelab.acme.enable = true;
+  homelab.acme.enable = false;
   homelab.dns.enable = true;
 
   networking = {
