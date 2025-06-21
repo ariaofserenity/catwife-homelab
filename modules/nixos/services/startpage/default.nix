@@ -34,6 +34,7 @@ in {
     system.activationScripts.cloneWebpage = {
       text = ''
         if [ ! -d /var/www/startpage/.git ]; then
+          export PATH=${pkgs.git}/bin:$PATH
           git clone https://github.com/ariaofserenity/startpage /var/www/startpage
         fi
       '';
