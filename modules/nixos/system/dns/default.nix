@@ -36,9 +36,13 @@ in
       ports.dns = 53;
       upstreams.groups.default = [
         "127.0.0.1:5353"
+        "1.1.1.1"
       ];
       conditional = {
         fallbackUpstream = true;
+        mapping = {
+          "catwife.dev." = "127.0.0.1:5353";
+        };
       };
       
       blocking = {
