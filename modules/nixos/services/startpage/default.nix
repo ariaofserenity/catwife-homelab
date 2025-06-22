@@ -23,6 +23,7 @@ in {
       Type = "oneshot";
     };
     script = ''
+      export PATH=${pkgs.git}/bin:$PATH
       cd /var/www/startpage
       git pull
       systemctl reload nginx
