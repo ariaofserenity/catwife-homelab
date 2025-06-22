@@ -9,6 +9,12 @@ in {
       enable = true;
       virtualHosts."startpage.catwife.dev" = {
         root = "/var/www/startpage";
+        addSSL = true;
+        sslCertificate = "/var/lib/acme/catwife.dev/fullchain.pem";
+        sslCertificateKey = "/var/lib/acme/catwife.dev/key.pem";
+        locations."/" = {
+          index = "index.html";
+        };
       };
     };
 
@@ -40,6 +46,6 @@ in {
       '';
     };
 
-    networking.firewall.allowedTCPPorts = [ 80 ];
+    networking.firewall.allowedTCPPorts = [ 80 443 ];
   };
 }

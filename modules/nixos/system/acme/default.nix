@@ -21,6 +21,7 @@ with lib;
         dnsProvider = "cloudflare";
         environmentFile = config.sops.secrets.cfToken.path;
 
+        group = "nginx";
         webroot = lib.mkForce null;
         listenHTTP = lib.mkForce null;
         s3Bucket = lib.mkForce null;
