@@ -42,6 +42,7 @@ in
         fallbackUpstream = true;
         mapping = {
           "catwife.dev." = "127.0.0.1:5353";
+          "gf-dis.catwife.dev" = "1.1.1.1";
         };
       };
       
