@@ -11,7 +11,7 @@ let
   ) net.records.A);
 in
 {
-  options.homelab.dns.enable = mkEnableOption "Enable local DNS with Unbound and AdGuard";
+  options.homelab.dns.enable = mkEnableOption "Enable local DNS with Unbound and Blocky";
 
   config = mkIf cfg.enable {
     services.unbound = {
