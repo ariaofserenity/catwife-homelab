@@ -6,8 +6,6 @@
       ./mounts.nix
     ];
 
-  role = "desktop"; 
-
   #homelab.acme.enable = true;
   #homelab.dns.enable = true;
   

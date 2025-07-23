@@ -6,8 +6,6 @@
       ./mounts.nix
     ];
 
-  role = "server"; 
-
   homelab.acme.enable = true;
   homelab.services.grocy.enable = true;
   homelab.services.startpage.enable = true;

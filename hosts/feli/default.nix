@@ -5,8 +5,6 @@
       ./hardware-configuration.nix
     ];
 
-  role = "server"; 
-
   homelab.acme.enable = false;
   homelab.dns.enable = true;
 

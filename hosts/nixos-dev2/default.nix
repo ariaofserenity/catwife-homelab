@@ -4,9 +4,7 @@
   imports = [
       ./hardware-configuration.nix
     ];
-
-  role = "desktop";
-  
+      
   #homelab.acme.enable = true;
   #homelab.services.grocy.enable = true;
 

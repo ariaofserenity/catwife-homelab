@@ -1,5 +1,7 @@
 { config, pkgs, lib, ... }:
 {
+    home.username = "aria";
+    home.homeDirectory = "/home/aria";
     home.packages = [ pkgs.atool ];
     programs.bash.enable = true;
     programs.bash.shellAliases = {
