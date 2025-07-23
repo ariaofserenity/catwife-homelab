@@ -5,8 +5,8 @@
       ./hardware-configuration.nix
     ];
 
-  homelab.acme.enable = false;
-  homelab.dns.enable = true;
+  homelab.system.acme.enable = false;
+  homelab.system.dns.enable = true;
 
   networking = {
     hostName = "feli";

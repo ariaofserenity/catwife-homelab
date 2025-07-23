@@ -3,24 +3,22 @@
 with lib;
 
 {
-  options.homelab.acme.enable = mkEnableOption "Wildcard ACME using Cloudflare";
+  options.homelab.system.acme.enable = mkEnableOption "Wildcard ACME using Cloudflare";
 
-  config = mkIf config.homelab.acme.enable {
+  config = mkIf config.homelab.system.acme.enable {
     sops.secrets.cfToken = {
-      sopsFile = ../../../../secrets/cf.env;
-      format = "dotenv";
+      sopsFile = config.homelab.secrets.cloudflare.file;
+      format = config.homelab.secrets.cloudflare.format;
     };
 
     security.acme = {
       acceptTerms = true;
-      defaults.email = "ariaserenityvt@gmail.com";
-
-      certs."catwife.dev" = {
-        domain = "*.catwife.dev";
-        extraDomainNames = [ "catwife.dev" ];
+      defaults.email = config.homelab.mail;
+      certs.${config.homelab.domain} = {
+        domain = "*.${config.homelab.domain}";
+        extraDomainNames = [ config.homelab.domain ];
         dnsProvider = "cloudflare";
         environmentFile = config.sops.secrets.cfToken.path;
-
         group = "nginx";
         webroot = lib.mkForce null;
         listenHTTP = lib.mkForce null;

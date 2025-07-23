@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.homelab.services.nfs;
+  cfg = config.homelab.system.nfs;
 in
 {
-  options.homelab.services.nfs = {
+  options.homelab.system.nfs = {
     enable = lib.mkEnableOption "Enable mounting of NFS shares";
 
     mounts = lib.mkOption {
@@ -35,12 +35,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # Create mount points
     systemd.tmpfiles.rules = lib.mapAttrsToList (_: mountCfg:
       "d ${mountCfg.mountPoint} 0755 root root -"
     ) cfg.mounts;
 
-    # Set filesystems
     fileSystems = lib.mkMerge (
       lib.mapAttrsToList (_: mountCfg: {
         "${mountCfg.mountPoint}" = {

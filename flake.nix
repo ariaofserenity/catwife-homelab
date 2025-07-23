@@ -17,6 +17,7 @@
 
   outputs = { self, nixpkgs, home-manager, sops-nix, comin, ... }@inputs:
     let
+      domain = "catwife.dev";
       hostModules = {
         feli = import ./hosts/feli;
         marisa = import ./hosts/marisa;
@@ -57,6 +58,8 @@
         sops-nix.nixosModules.sops
         ./global
         ./modules/nixos
+        ./global/homelab.nix
+        ./secrets
         {
           services.comin = {
             enable = true;

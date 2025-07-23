@@ -2,16 +2,17 @@
 
 with lib;
 let
-  cfg = config.homelab.dns;
+  cfg = config.homelab.system.dns;
   net = builtins.fromJSON (builtins.readFile ./network.json);
-  
   mkLocalData =
   (lib.mapAttrsToList (name: ip:
     "\"${name} IN A ${ip}\""
   ) net.records.A);
 in
 {
-  options.homelab.dns.enable = mkEnableOption "Enable local DNS with Unbound and Blocky";
+  options.homelab.system.dns = {
+    enable = mkEnableOption "Enable local DNS with Unbound and Blocky";
+  };
 
   config = mkIf cfg.enable {
     services.unbound = {

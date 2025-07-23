@@ -6,7 +6,7 @@
       ./mounts.nix
     ];
 
-  homelab.acme.enable = true;
+  homelab.system.acme.enable = true;
   homelab.services.grocy.enable = true;
   homelab.services.startpage.enable = true;
 

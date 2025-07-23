@@ -7,11 +7,11 @@ in {
   config = mkIf cfg.enable {
     services.nginx = {
       enable = true;
-      virtualHosts."startpage.catwife.dev" = {
+      virtualHosts."startpage.${config.homelab.domain}" = {
         root = "/var/www/startpage";
         addSSL = true;
-        sslCertificate = "/var/lib/acme/catwife.dev/fullchain.pem";
-        sslCertificateKey = "/var/lib/acme/catwife.dev/key.pem";
+        sslCertificate = "/var/lib/acme/${config.homelab.domain}/fullchain.pem";
+        sslCertificateKey = "/var/lib/acme/${config.homelab.domain}/key.pem";
         locations."/" = {
           index = "index.html";
         };

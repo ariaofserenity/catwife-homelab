@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 
 {
-  homelab.services.nfs.enable = true;
-  homelab.services.nfs.mounts = {
+  homelab.system.nfs.enable = true;
+  homelab.system.nfs.mounts = {
     common = {
       remoteHost = "192.168.2.14";
       remotePath = "/mnt/d01/common";

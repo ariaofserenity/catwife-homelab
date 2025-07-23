@@ -7,16 +7,16 @@ in {
   config = mkIf cfg.enable {
     services.grocy = {
       enable = true;
-      hostName = "grocy.catwife.dev";
+      hostName = "grocy.${config.homelab.domain}";
       nginx.enableSSL = false;
       dataDir = "/var/lib/grocy";
       settings.currency = "CAD";
     };
 
-    services.nginx.virtualHosts."grocy.catwife.dev" = {
+    services.nginx.virtualHosts."grocy.${config.homelab.domain}" = {
       addSSL = true;
-      sslCertificate = "/var/lib/acme/catwife.dev/fullchain.pem";
-      sslCertificateKey = "/var/lib/acme/catwife.dev/key.pem";
+      sslCertificate = "/var/lib/acme/${config.homelab.domain}/fullchain.pem";
+      sslCertificateKey = "/var/lib/acme/${config.homelab.domain}/key.pem";
     };
     networking.firewall.allowedTCPPorts = [ 80 443 ];
   };
