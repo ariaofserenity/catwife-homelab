@@ -3,7 +3,7 @@
 with lib;
 let
   cfg = config.homelab.dns;
-  net = builtins.fromJSON (builtins.readFile ../../../../network.json);
+  net = builtins.fromJSON (builtins.readFile ./network.json);
   
   mkLocalData =
   (lib.mapAttrsToList (name: ip:
