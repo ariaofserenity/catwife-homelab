@@ -22,5 +22,11 @@
                 "startpage.catwife.dev" = "192.168.2.210";
             };
         };
+        
+        mappings = {
+             "${config.homelab.domain}." = "127.0.0.1:5353";
+            "gf-dis.catwife.dev" = "1.1.1.1";
+            "aria.catwife.dev" = "1.1.1.1";
+        };
     };
 }

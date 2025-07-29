@@ -51,5 +51,12 @@ in
       };
       default = {};
     };
+
+    mappings = mkOption {
+        type = types.attrsOf types.str;
+        default = {};
+        description = "forward mappings";
+    };
+
   };
 }

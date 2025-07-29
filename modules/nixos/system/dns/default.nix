@@ -47,11 +47,7 @@ in {
         ];
         conditional = {
           fallbackUpstream = true;
-          mapping = {
-            "${cfg.domain}." = "127.0.0.1:5353";
-            "gf-dis.catwife.dev" = "1.1.1.1";
-            "aria.catwife.dev" = "1.1.1.1";
-          };
+          mapping = cfg.mappings;
         };
         blocking = {
           denylists = {
