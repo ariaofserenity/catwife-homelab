@@ -3,5 +3,6 @@ with lib;
 {
   imports = [
     ./cloudflare
+    ./forgejo
   ];
 }

@@ -20,6 +20,7 @@
                 "proxmox01.catwife.dev" = "192.168.2.13";
                 "storage01.catwife.dev" = "192.168.2.14";
                 "startpage.catwife.dev" = "192.168.2.210";
+                "git.catwife.dev" = "192.168.2.210";
             };
         };
         

@@ -1,5 +1,11 @@
 creation_rules:
-  - path_regex: secrets/cf.env
+  - path_regex: secrets/cloudflare/cf.env
+    age: >-
+      age1mj9cqagk6q6rx7y2wxzvdawche6unnkwemurm9ez7nlvrcc69a0syvyltt,
+      age1wn75mgz7k92jmxg9ejhelcqyahvcqh2zf9mncpz47njpu9khd3gsakyh5k,
+      age17j9r835afc5wpmllhfgq0lfc6wcgpez39kuk54n5xhxtkaycu54smdt2kd,
+      age1rs7lzjj940afqt5ru2q4xdnjt74su5pwwl274zw57pa7em5fa53qpmhqrh
+  - path_regex: secrets/forgejo/forgejo-secrets.yaml
     age: >-
       age1mj9cqagk6q6rx7y2wxzvdawche6unnkwemurm9ez7nlvrcc69a0syvyltt,
       age1wn75mgz7k92jmxg9ejhelcqyahvcqh2zf9mncpz47njpu9khd3gsakyh5k,

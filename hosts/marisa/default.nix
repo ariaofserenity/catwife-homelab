@@ -9,6 +9,7 @@
   homelab.system.acme.enable = true;
   homelab.services.grocy.enable = true;
   homelab.services.startpage.enable = true;
+  homelab.services.forgejo.enable = true;
 
   networking = {
     hostName = "marisa";

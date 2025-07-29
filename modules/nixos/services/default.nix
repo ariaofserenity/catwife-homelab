@@ -2,5 +2,6 @@
   imports = [
     ./grocy
     ./startpage
+    ./forgejo
   ];
 }
