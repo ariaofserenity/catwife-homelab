@@ -1,18 +1,26 @@
-{ lib, config, pkgs, ... }:
-
+{ config, lib, pkgs, ... }:
 with lib;
 let
   cfg = config.homelab.system.dns;
-  net = builtins.fromJSON (builtins.readFile ./network.json);
-  mkLocalData =
-  (lib.mapAttrsToList (name: ip:
-    "\"${name} IN A ${ip}\""
-  ) net.records.A);
-in
-{
-  options.homelab.system.dns = {
-    enable = mkEnableOption "Enable local DNS with Unbound and Blocky";
-  };
+
+  mkLocalData = records: domain:
+    let
+      aRecords = mapAttrsToList (name: ip:
+        "\"${name}.${domain} IN A ${ip}\""
+      ) (records.A or {});
+
+      cnameRecords = mapAttrsToList (name: target:
+        "\"${name}.${domain} IN CNAME ${target}.${domain}\""
+      ) (records.CNAME or {});
+
+      mxRecords = mapAttrsToList (name: mx:
+        "\"${name}.${domain} IN MX ${toString mx.priority} ${mx.target}\""
+      ) (records.MX or {});
+    in
+      aRecords ++ cnameRecords ++ mxRecords;
+
+in {
+  imports = [ ./dns.nix ];
 
   config = mkIf cfg.enable {
     services.unbound = {
@@ -21,45 +29,42 @@ in
         server = {
           interface = [ "127.0.0.1" ];
           port = 5353;
-          access-control = "192.168.2.0/24 allow";
+          access-control = "${cfg.network} allow";
           verbosity = 1;
-
-          
-          local-zone = [ "\"${net.domain}\" static" ];
-          local-data = mkLocalData;
+          local-zone = [ "\"${cfg.domain}\" static" ];
+          local-data = mkLocalData cfg.records cfg.domain;
         };
       };
     };
 
-   services.blocky = {
-    enable = true;
-    settings = {
-      ports.dns = 53;
-      upstreams.groups.default = [
-        "127.0.0.1:5353"
-        "1.1.1.1"
-      ];
-      conditional = {
-        fallbackUpstream = true;
-        mapping = {
-          "catwife.dev." = "127.0.0.1:5353";
-          "gf-dis.catwife.dev" = "1.1.1.1";
-          "aria.catwife.dev" = "1.1.1.1";
+    services.blocky = {
+      enable = true;
+      settings = {
+        ports.dns = 53;
+        upstreams.groups.default = [
+          "127.0.0.1:5353"
+          "1.1.1.1"
+        ];
+        conditional = {
+          fallbackUpstream = true;
+          mapping = {
+            "${cfg.domain}." = "127.0.0.1:5353";
+            "gf-dis.catwife.dev" = "1.1.1.1";
+            "aria.catwife.dev" = "1.1.1.1";
+          };
         };
-      };
-      
-      blocking = {
-        denylists = {
-          ads = ["https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"];
-         
-        };
-
-        clientGroupsBlock = {
-          default = [ "ads" ];
+        blocking = {
+          denylists = {
+            ads = [
+              "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
+            ];
+          };
+          clientGroupsBlock = {
+            default = [ "ads" ];
+          };
         };
       };
     };
-  };
 
     networking.firewall.allowedTCPPorts = [ 53 5353 3000 ];
     networking.firewall.allowedUDPPorts = [ 53 5353 ];

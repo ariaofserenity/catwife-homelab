@@ -3,10 +3,10 @@
 {
   imports = [
       ./hardware-configuration.nix
+      ./dns.nix
     ];
 
   homelab.system.acme.enable = false;
-  homelab.system.dns.enable = true;
 
   networking = {
     hostName = "feli";
