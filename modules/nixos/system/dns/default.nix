@@ -34,6 +34,13 @@ in {
           local-zone = [ "\"${cfg.domain}\" static" ];
           local-data = mkLocalData cfg.records cfg.domain;
         };
+
+        forward-zone = [{
+          name = ".";
+          forward-addr = [
+              "1.1.1.1@853#cloudflare-dns.com"
+          ];
+        }];
       };
     };
 
